@@ -1,6 +1,7 @@
 FROM alpine
 
-RUN echo "$TARGETPLATFORM | $TARGETOS | $TARGETARCH | $TARGETVARIANT | $BUILDPLATFORM | $BUILDOS | $BUILDARCH | $BUILDVARIANT"
+RUN echo uname -m
+RUN echo apk --print-arch
 
 RUN apk add --update --no-cache ffmpeg \
 && wget -O /usr/bin/torrserver https://github.com/YouROK/TorrServer/releases/download/MatriX.110/TorrServer-linux-arm64 \
