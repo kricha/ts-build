@@ -1,7 +1,7 @@
 FROM alpine
 
-RUN echo uname -m
-RUN echo apk --print-arch
+RUN uname -m
+RUN apk --print-arch
 
 RUN apk add --update --no-cache ffmpeg \
 && wget -O /usr/bin/torrserver https://github.com/YouROK/TorrServer/releases/download/MatriX.110/TorrServer-linux-arm64 \
