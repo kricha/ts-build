@@ -1,7 +1,12 @@
+FROM --platform=$BUILDPLATFORM golang:alpine AS build
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
+RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM"
+
 FROM alpine
 
 RUN uname -m
-RUN apk --print-arch
+RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM"
 
 RUN apk add --update --no-cache ffmpeg \
 && wget -O /usr/bin/torrserver https://github.com/YouROK/TorrServer/releases/download/MatriX.110/TorrServer-linux-arm64 \
