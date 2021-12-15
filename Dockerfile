@@ -1,13 +1,17 @@
-FROM --platform=$BUILDPLATFORM alpine AS build
-ARG TARGETPLATFORM
-ARG BUILDPLATFORM
-RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM" > /log
-
 FROM alpine
 
 RUN uname -m
-COPY --from=build /log /log
-RUN cat /log
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
+ARG TARGETOS
+ARG TARGETARCH
+ARG TARGETVARIANT
+ARG BUILDOS
+ARG BUILDARCH
+ARG BUILDVARIANT
+
+RUN echo "$TARGETPLATFORM | $TARGETOS | $TARGETARCH | $TARGETVARIANT | $BUILDPLATFORM | $BUILDOS | $BUILDARCH | $BUILDVARIANT"
+
 
 RUN apk add --update --no-cache ffmpeg \
 && wget -O /usr/bin/torrserver https://github.com/YouROK/TorrServer/releases/download/MatriX.110/TorrServer-linux-arm64 \
