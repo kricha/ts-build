@@ -1,25 +1,17 @@
 FROM alpine
 
-RUN uname -m
-ARG TARGETPLATFORM
-ARG BUILDPLATFORM
 ARG TARGETOS
 ARG TARGETARCH
 ARG TARGETVARIANT
-ARG BUILDOS
-ARG BUILDARCH
-ARG BUILDVARIANT
 ARG TS_TAG
 
-RUN echo "$TARGETOS | $TARGETARCH | $TARGETVARIANT | ECHO $TS_TAG"
-
+ENV TS_CONF_PATH="/opt/ts/config"
+ENV TS_LOG_PATH="/opt/ts/log"
+ENV TS_PORT=8090
 
 RUN apk add --update --no-cache ffmpeg \
-&& wget -O /usr/bin/torrserver https://github.com/YouROK/TorrServer/releases/download/MatriX.110/TorrServer-linux-arm64 \
+&& wget -O /usr/bin/torrserver https://github.com/YouROK/TorrServer/releases/download/${TS_TAG}/TorrServer-${TARGETOS}-${TARGETARCH} \
 && chmod +x /usr/bin/torrserver \
-&& mkdir -p /opt/db
+&& mkdir -p $TS_CONF_PATH && mkdir $TS_LOG_PATH
 
-EXPOSE 8090:8090
-
-CMD ["torrserver", "--path", "/opt/db"]
-
+CMD torrserver -d $TS_CONF_PATH -l $TS_LOG_PATH -p $TS_PORT
