@@ -41,6 +41,5 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ env.IMAGE_NAME }}:latest
-            ghcr.io/${{ env.IMAGE_NAME }}:${{ github.event.release.tag_name }}
           build-args: |
             TS_TAG=${{ github.event.release.tag_name }}
